@@ -6,15 +6,20 @@ echo   AETHER DIGITAL STUDIO - CLOUD DEPLOYER
 echo ========================================================
 echo.
 
-echo [1/3] Adding all changes to Git...
+echo [1/4] Force-adding asset images...
+git add -f frontend/src/assets/*.png
+
+echo.
+echo [2/4] Adding all other changes...
 git add -A
 
 echo.
-echo [2/3] Creating commit...
-git commit -m "Deploy: update %date% %time:~0,5%"
+echo [3/4] Creating commit...
+git status --short
+git commit -m "Deploy: assets + code update %date% %time:~0,5%"
 
 echo.
-echo [3/3] Pushing to GitHub...
+echo [4/4] Pushing to GitHub...
 git push origin main
 
 if %ERRORLEVEL% NEQ 0 (
