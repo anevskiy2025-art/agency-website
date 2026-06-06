@@ -1,5 +1,5 @@
 $src = "C:\Users\User\.gemini\antigravity\brain\bc8e4694-d1dc-4356-9a71-f5933e981a38"
-$dst = "c:\Users\User\OneDrive\Desktop\Работа\agent google\agency-website\frontend\src\assets"
+$dst = Join-Path $PSScriptRoot "frontend\src\assets"
 
 if (!(Test-Path $dst)) { New-Item -ItemType Directory -Path $dst -Force }
 
