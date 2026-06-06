@@ -4,21 +4,21 @@ export const theme = createTheme({
   palette: {
     mode: 'dark',
     background: {
-      default: '#0A0A0C', // Off-black base
-      paper: '#121215',   // Slightly lighter card/panel background
+      default: '#050507', // Deep luxury black
+      paper: '#0C0C0F',   // Slightly lighter cards
     },
     primary: {
-      main: '#FFFFFF',     // Clean white elements
-      contrastText: '#0A0A0C',
+      main: '#FFFFFF',
+      contrastText: '#050507',
     },
     secondary: {
-      main: '#8F9094',     // Muted gray
+      main: '#8F9094',
     },
     text: {
       primary: '#FFFFFF',
       secondary: '#8F9094',
     },
-    divider: 'rgba(255, 255, 255, 0.08)', // Fine lines for grid layout
+    divider: 'rgba(255, 255, 255, 0.06)',
   },
   typography: {
     fontFamily: '"Inter", sans-serif',
@@ -53,10 +53,36 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        body {
+          background-color: #050507;
+          background-image: 
+            linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+          background-size: 100px 100px;
+          background-position: center top;
+          position: relative;
+        }
+        body::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translate(-50%, 0);
+          width: 100%;
+          max-width: 1600px;
+          height: 800px;
+          background: radial-gradient(circle at 50% 0%, rgba(115, 9, 243, 0.12) 0%, rgba(115, 9, 243, 0.02) 50%, rgba(0,0,0,0) 100%);
+          z-index: 0;
+          pointer-events: none;
+        }
+      `
+    },
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 0, // Sharp corners to match duties.xyz grid style
+          borderRadius: 0,
           border: '1px solid rgba(255, 255, 255, 0.15)',
           padding: '10px 24px',
           color: '#FFFFFF',
@@ -70,10 +96,10 @@ export const theme = createTheme({
         },
         contained: {
           backgroundColor: '#FFFFFF',
-          color: '#0A0A0C',
+          color: '#050507',
           '&:hover': {
             backgroundColor: '#E6E6E6',
-            color: '#0A0A0C',
+            color: '#050507',
           },
         },
       },
@@ -83,7 +109,7 @@ export const theme = createTheme({
         root: {
           borderRadius: 0,
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'rgba(255, 255, 255, 0.15)',
+            borderColor: 'rgba(255, 255, 255, 0.12)',
             transition: 'border-color 0.3s ease',
           },
           '&:hover .MuiOutlinedInput-notchedOutline': {

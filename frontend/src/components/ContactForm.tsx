@@ -220,7 +220,29 @@ export default function ContactForm() {
 
           {/* Right Side: Contact details & instant messengers */}
           <Grid item xs={12} md={5} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <Box sx={{ p: { xs: 4, md: 6 }, border: '1px solid rgba(255, 255, 255, 0.08)', bgcolor: '#111114' }}>
+            <Box 
+              sx={{ 
+                p: { xs: 4, md: 6 }, 
+                border: '1px solid rgba(255, 255, 255, 0.06)', 
+                bgcolor: 'background.paper',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '2px',
+                  background: 'linear-gradient(90deg, #7309F3 0%, rgba(115, 9, 243, 0) 100%)',
+                },
+                '&:hover': {
+                  borderColor: 'rgba(255, 255, 255, 0.12)',
+                  boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)'
+                }
+              }}
+            >
               <Typography 
                 variant="h4" 
                 sx={{ 

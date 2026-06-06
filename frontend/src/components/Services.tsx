@@ -1,4 +1,5 @@
 import { Box, Container, Typography, Grid } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const services = [
   {
@@ -33,7 +34,8 @@ export default function Services() {
       id="services" 
       sx={{ 
         py: { xs: 8, md: 15 }, 
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)' 
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        position: 'relative'
       }}
     >
       <Container maxWidth="xl">
@@ -45,7 +47,8 @@ export default function Services() {
               color: 'text.secondary', 
               textTransform: 'uppercase', 
               letterSpacing: '3px',
-              mb: 2
+              mb: 2,
+              fontWeight: 600
             }}
           >
             / ЧТО МЫ ДЕЛАЕМ
@@ -63,7 +66,14 @@ export default function Services() {
         </Box>
 
         {/* Services Grid */}
-        <Grid container spacing={0} sx={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderLeft: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <Grid 
+          container 
+          spacing={0} 
+          sx={{ 
+            borderTop: '1px solid rgba(255, 255, 255, 0.08)', 
+            borderLeft: '1px solid rgba(255, 255, 255, 0.08)' 
+          }}
+        >
           {services.map((service) => (
             <Grid 
               item 
@@ -75,40 +85,60 @@ export default function Services() {
                 borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
                 p: { xs: 4, md: 6 },
                 position: 'relative',
-                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 cursor: 'pointer',
                 backgroundColor: 'transparent',
                 '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.02)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.01)',
                   '& .service-num': {
                     color: '#FFFFFF',
-                    transform: 'translateX(5px)'
+                    transform: 'translateX(6px)'
+                  },
+                  '& .service-arrow': {
+                    opacity: 1,
+                    transform: 'translateX(0)'
+                  },
+                  '& .service-tag': {
+                    borderColor: 'rgba(255, 255, 255, 0.25)',
+                    color: '#FFFFFF'
                   }
                 }
               }}
             >
-              {/* Service Number */}
-              <Typography
-                className="service-num"
-                variant="subtitle2"
-                sx={{
-                  color: 'rgba(255, 255, 255, 0.25)',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  mb: 3,
-                  display: 'inline-block',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                // {service.num}
-              </Typography>
+              {/* Number and Arrow Header */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                <Typography
+                  className="service-num"
+                  variant="subtitle2"
+                  sx={{
+                    color: 'rgba(255, 255, 255, 0.25)',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    display: 'inline-block',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  // {service.num}
+                </Typography>
+                
+                <ArrowForwardIcon 
+                  className="service-arrow"
+                  sx={{ 
+                    color: '#FFFFFF', 
+                    fontSize: '1.2rem',
+                    opacity: 0,
+                    transform: 'translateX(-10px)',
+                    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                  }} 
+                />
+              </Box>
 
               {/* Service Title */}
               <Typography
                 variant="h4"
                 sx={{
                   fontSize: '1.8rem',
-                  mb: 2,
+                  mb: 2.5,
                   fontFamily: '"Playfair Display", serif',
                   fontWeight: 500
                 }}
@@ -122,8 +152,8 @@ export default function Services() {
                 sx={{
                   color: 'text.secondary',
                   fontSize: '1rem',
-                  lineHeight: 1.6,
-                  mb: 4
+                  lineHeight: 1.7,
+                  mb: 4.5
                 }}
               >
                 {service.desc}
@@ -134,13 +164,16 @@ export default function Services() {
                 {service.details.map((detail) => (
                   <Box
                     key={detail}
+                    className="service-tag"
                     sx={{
-                      px: 2,
-                      py: 0.5,
+                      px: 2.2,
+                      py: 0.6,
                       border: '1px solid rgba(255, 255, 255, 0.08)',
-                      fontSize: '0.8rem',
+                      fontSize: '0.78rem',
                       color: 'text.secondary',
-                      fontFamily: '"Inter", sans-serif'
+                      fontFamily: '"Inter", sans-serif',
+                      transition: 'all 0.3s ease',
+                      fontWeight: 500
                     }}
                   >
                     {detail}
