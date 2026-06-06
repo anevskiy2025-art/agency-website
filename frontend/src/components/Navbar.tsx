@@ -41,23 +41,28 @@ export default function Navbar() {
       position="sticky" 
       elevation={0}
       sx={{ 
-        bgcolor: '#0A0A0C', 
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-        zIndex: (theme) => theme.zIndex.drawer + 1
+        bgcolor: 'background.default', 
+        borderBottom: '1.5px solid #252525',
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        color: 'text.primary'
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ justifyContent: 'space-between', height: 70 }}>
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between', height: 80 }}>
           {/* Logo */}
           <Typography
-            variant="h6"
+            variant="h4"
             component="div"
             sx={{
-              fontFamily: '"Playfair Display", serif',
-              fontSize: '1.5rem',
-              fontWeight: 600,
+              fontFamily: '"Barlow Condensed", sans-serif',
+              fontWeight: 900,
+              fontSize: '2rem',
               cursor: 'pointer',
-              letterSpacing: '-0.5px'
+              letterSpacing: '-0.5px',
+              color: 'primary.main',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1
             }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
@@ -65,7 +70,7 @@ export default function Navbar() {
           </Typography>
 
           {/* Desktop Nav Items */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 4, alignItems: 'center' }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 5, alignItems: 'center' }}>
             {navItems.map((item) => (
               <Button
                 key={item.label}
@@ -73,11 +78,12 @@ export default function Navbar() {
                 sx={{
                   border: 'none',
                   p: 0,
-                  fontSize: '0.9rem',
-                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: '0.85rem',
+                  fontFamily: '"Space Mono", monospace',
+                  fontWeight: 700,
+                  color: 'rgba(37,37,37,0.7)',
                   '&:hover': {
-                    color: '#FFFFFF',
-                    transform: 'none',
+                    color: '#252525',
                     backgroundColor: 'transparent'
                   }
                 }}
@@ -100,7 +106,7 @@ export default function Navbar() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ display: { md: 'none' } }}
+            sx={{ display: { md: 'none' }, color: '#252525' }}
           >
             {mobileOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
@@ -118,26 +124,29 @@ export default function Navbar() {
           '& .MuiDrawer-paper': { 
             boxSizing: 'border-box', 
             width: '100%', 
-            bgcolor: '#0A0A0C',
+            bgcolor: 'background.default',
             backgroundImage: 'none',
             borderLeft: 'none',
-            pt: 8
+            pt: 10
           },
         }}
       >
         <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', height: '100%' }}>
           <List sx={{ mb: 'auto' }}>
             {navItems.map((item) => (
-              <ListItem key={item.label} disablePadding sx={{ mb: 2 }}>
+              <ListItem key={item.label} disablePadding sx={{ mb: 3 }}>
                 <ListItemText
                   primary={item.label}
                   primaryTypographyProps={{
                     align: 'center',
                     onClick: () => scrollToSection(item.id),
                     sx: {
-                      fontFamily: '"Playfair Display", serif',
-                      fontSize: '2.5rem',
-                      cursor: 'pointer'
+                      fontFamily: '"Barlow Condensed", sans-serif',
+                      fontSize: '3rem',
+                      fontWeight: 900,
+                      cursor: 'pointer',
+                      color: 'primary.main',
+                      textTransform: 'uppercase'
                     }
                   }}
                 />
@@ -148,7 +157,7 @@ export default function Navbar() {
             variant="contained" 
             fullWidth
             onClick={() => scrollToSection('#contact')}
-            sx={{ py: 2, fontSize: '1.1rem' }}
+            sx={{ py: 2, fontSize: '1rem' }}
           >
             Обсудить проект
           </Button>

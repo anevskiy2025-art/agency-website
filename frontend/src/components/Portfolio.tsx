@@ -50,146 +50,163 @@ export default function Portfolio() {
     <Box 
       id="portfolio" 
       sx={{ 
-        py: { xs: 8, md: 15 }, 
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)' 
+        py: { xs: 8, md: 12 }, 
+        borderBottom: '1.5px solid #252525' 
       }}
     >
       <Container maxWidth="xl">
-        {/* Header and Filter block */}
-        <Box sx={{ 
-          display: 'flex', 
-          flexDirection: { xs: 'column', md: 'row' }, 
-          justifyContent: 'space-between', 
-          alignItems: { xs: 'flex-start', md: 'flex-end' }, 
-          mb: { xs: 6, md: 10 },
-          gap: 4
-        }}>
-          <Box>
-            <Typography 
-              variant="subtitle2" 
-              sx={{ 
-                color: 'text.secondary', 
-                textTransform: 'uppercase', 
-                letterSpacing: '3px',
-                mb: 2
-              }}
-            >
-              / НАШИ ПРОЕКТЫ
-            </Typography>
-            <Typography 
-              variant="h2" 
-              sx={{ 
-                fontSize: { xs: '2.2rem', md: '3.5rem' }, 
-                letterSpacing: '-1.5px',
-                fontFamily: '"Playfair Display", serif'
-              }}
-            >
-              Избранные кейсы
-            </Typography>
-          </Box>
-
-          <Tabs 
-            value={activeTab} 
-            onChange={handleTabChange}
-            textColor="inherit"
-            indicatorColor="primary"
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{
-              '& .MuiTab-root': {
-                fontSize: '0.95rem',
-                minWidth: 'auto',
-                px: 2,
-                color: 'text.secondary',
-                '&.Mui-selected': {
-                  color: '#FFFFFF'
-                }
-              },
-              '& .MuiTabs-indicator': {
-                backgroundColor: '#FFFFFF',
-                height: '1px'
-              }
-            }}
-          >
-            {categories.map((cat) => (
-              <Tab label={cat} key={cat} />
-            ))}
-          </Tabs>
-        </Box>
-
-        {/* Portfolio Grid */}
         <Grid container spacing={4}>
-          {filteredProjects.map((project, index) => (
-            <Grid item xs={12} md={6} key={index}>
-              <Box 
+          
+          {/* Left Column: Title & Filters */}
+          <Grid item xs={12} md={3}>
+            <Box sx={{ borderTop: '1.5px solid #252525', pt: 3, position: { md: 'sticky' }, top: 120 }}>
+              <Typography 
+                variant="subtitle2" 
+                sx={{ 
+                  color: 'text.secondary', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '2px',
+                  mb: 1,
+                  fontWeight: 700
+                }}
+              >
+                / ПОРТФОЛИО
+              </Typography>
+              <Typography 
+                variant="h3" 
+                sx={{ 
+                  fontSize: { xs: '2rem', md: '2.5rem' }, 
+                  fontWeight: 900,
+                  mb: 3
+                }}
+              >
+                ИЗБРАННЫЕ КЕЙСЫ
+              </Typography>
+
+              <Tabs 
+                value={activeTab} 
+                onChange={handleTabChange}
+                textColor="inherit"
+                variant="scrollable"
+                scrollButtons="auto"
                 sx={{
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  p: 2,
-                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  cursor: 'pointer',
-                  '&:hover': {
-                    borderColor: '#FFFFFF',
-                    transform: 'translateY(-4px)',
-                    '& .project-image img': {
-                      transform: 'scale(1.03)'
+                  '& .MuiTabs-flexContainer': {
+                    gap: 1,
+                    flexWrap: { xs: 'nowrap', md: 'wrap' }
+                  },
+                  '& .MuiTab-root': {
+                    fontFamily: '"Space Mono", monospace',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    minWidth: 'auto',
+                    px: 1.8,
+                    py: 0.8,
+                    border: '1.5px solid #252525',
+                    color: '#252525',
+                    borderRadius: 0,
+                    transition: 'all 0.15s ease-in-out',
+                    '&.Mui-selected': {
+                      color: '#f1f0ee',
+                      backgroundColor: '#252525'
                     }
+                  },
+                  '& .MuiTabs-indicator': {
+                    display: 'none'
                   }
                 }}
               >
-                {/* Visual Image Container */}
-                <Box 
-                  className="project-image"
-                  sx={{
-                    height: 280,
-                    width: '100%',
-                    border: '1px solid rgba(255, 255, 255, 0.05)',
-                    overflow: 'hidden',
-                    mb: 3,
-                    position: 'relative'
-                  }}
-                >
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover',
-                      transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                    }} 
-                  />
-                </Box>
+                {categories.map((cat) => (
+                  <Tab label={cat.toUpperCase()} key={cat} />
+                ))}
+              </Tabs>
+            </Box>
+          </Grid>
 
-                {/* Text Metadata */}
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                  <Typography 
-                    variant="h5" 
-                    sx={{ 
-                      fontSize: '1.5rem', 
-                      fontFamily: '"Playfair Display", serif',
-                      fontWeight: 500
+          {/* Right Column: Grid List */}
+          <Grid item xs={12} md={9}>
+            <Grid 
+              container 
+              spacing={0} 
+              sx={{ 
+                borderTop: '1.5px solid #252525',
+                borderLeft: '1.5px solid #252525'
+              }}
+            >
+              {filteredProjects.map((project, index) => (
+                <Grid item xs={12} sm={6} key={index}>
+                  <Box 
+                    sx={{
+                      borderRight: '1.5px solid #252525',
+                      borderBottom: '1.5px solid #252525',
+                      p: { xs: 3, md: 4.5 },
+                      bgcolor: 'background.default',
+                      transition: 'all 0.15s ease-in-out',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        bgcolor: 'background.paper',
+                        '& img': {
+                          transform: 'scale(1.025)'
+                        }
+                      }
                     }}
                   >
-                    {project.title}
-                  </Typography>
-                  <Typography 
-                    variant="caption" 
-                    sx={{ 
-                      color: 'rgba(255, 255, 255, 0.4)', 
-                      fontFamily: '"Inter", sans-serif',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1px'
-                    }}
-                  >
-                    [{project.category}]
-                  </Typography>
-                </Box>
-                <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
-                  {project.desc}
-                </Typography>
-              </Box>
+                    {/* Visual Image Container */}
+                    <Box 
+                      sx={{
+                        height: { xs: 220, md: 280 },
+                        width: '100%',
+                        border: '1.5px solid #252525',
+                        overflow: 'hidden',
+                        mb: 3,
+                        position: 'relative',
+                        bgcolor: '#eae8e4'
+                      }}
+                    >
+                      <img 
+                        src={project.image} 
+                        alt={project.title} 
+                        style={{ 
+                          width: '100%', 
+                          height: '100%', 
+                          objectFit: 'cover',
+                          transition: 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                        }} 
+                      />
+                    </Box>
+
+                    {/* Text Metadata */}
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
+                      <Typography 
+                        variant="h4" 
+                        sx={{ 
+                          fontSize: '1.8rem', 
+                          fontWeight: 900,
+                          lineHeight: 1
+                        }}
+                      >
+                        {project.title}
+                      </Typography>
+                      <Typography 
+                        variant="caption" 
+                        sx={{ 
+                          color: 'text.secondary', 
+                          fontFamily: '"Space Mono", monospace',
+                          fontWeight: 700,
+                          fontSize: '0.72rem'
+                        }}
+                      >
+                        [{project.category.toUpperCase()}]
+                      </Typography>
+                    </Box>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.92rem', lineHeight: 1.6 }}>
+                      {project.desc}
+                    </Typography>
+                  </Box>
+                </Grid>
+              ))}
             </Grid>
-          ))}
+          </Grid>
+
         </Grid>
       </Container>
     </Box>

@@ -33,155 +33,164 @@ export default function Services() {
     <Box 
       id="services" 
       sx={{ 
-        py: { xs: 8, md: 15 }, 
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        py: { xs: 8, md: 12 }, 
+        borderBottom: '1.5px solid #252525',
         position: 'relative'
       }}
     >
       <Container maxWidth="xl">
-        {/* Section Header */}
-        <Box sx={{ mb: { xs: 6, md: 10 } }}>
-          <Typography 
-            variant="subtitle2" 
-            sx={{ 
-              color: 'text.secondary', 
-              textTransform: 'uppercase', 
-              letterSpacing: '3px',
-              mb: 2,
-              fontWeight: 600
-            }}
-          >
-            / ЧТО МЫ ДЕЛАЕМ
-          </Typography>
-          <Typography 
-            variant="h2" 
-            sx={{ 
-              fontSize: { xs: '2.2rem', md: '3.5rem' }, 
-              letterSpacing: '-1.5px',
-              fontFamily: '"Playfair Display", serif'
-            }}
-          >
-            Наши ключевые компетенции
-          </Typography>
-        </Box>
+        <Grid container spacing={4}>
+          
+          {/* Left Column: Section Title */}
+          <Grid item xs={12} md={3}>
+            <Box sx={{ borderTop: '1.5px solid #252525', pt: 3 }}>
+              <Typography 
+                variant="subtitle2" 
+                sx={{ 
+                  color: 'text.secondary', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '2px',
+                  mb: 1,
+                  fontWeight: 700
+                }}
+              >
+                / УСЛУГИ
+              </Typography>
+              <Typography 
+                variant="h3" 
+                sx={{ 
+                  fontSize: { xs: '2rem', md: '2.5rem' }, 
+                  fontWeight: 900
+                }}
+              >
+                ЧТО МЫ ДЕЛАЕМ
+              </Typography>
+            </Box>
+          </Grid>
 
-        {/* Services Grid */}
-        <Grid 
-          container 
-          spacing={0} 
-          sx={{ 
-            borderTop: '1px solid rgba(255, 255, 255, 0.08)', 
-            borderLeft: '1px solid rgba(255, 255, 255, 0.08)' 
-          }}
-        >
-          {services.map((service) => (
+          {/* Right Column: Services Grid */}
+          <Grid item xs={12} md={9}>
             <Grid 
-              item 
-              xs={12} 
-              md={6} 
-              key={service.num}
-              sx={{
-                borderRight: '1px solid rgba(255, 255, 255, 0.08)',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                p: { xs: 4, md: 6 },
-                position: 'relative',
-                transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                cursor: 'pointer',
-                backgroundColor: 'transparent',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.01)',
-                  '& .service-num': {
-                    color: '#FFFFFF',
-                    transform: 'translateX(6px)'
-                  },
-                  '& .service-arrow': {
-                    opacity: 1,
-                    transform: 'translateX(0)'
-                  },
-                  '& .service-tag': {
-                    borderColor: 'rgba(255, 255, 255, 0.25)',
-                    color: '#FFFFFF'
-                  }
-                }
+              container 
+              spacing={0} 
+              sx={{ 
+                borderTop: '1.5px solid #252525', 
+                borderLeft: '1.5px solid #252525' 
               }}
             >
-              {/* Number and Arrow Header */}
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Typography
-                  className="service-num"
-                  variant="subtitle2"
+              {services.map((service) => (
+                <Grid 
+                  item 
+                  xs={12} 
+                  sm={6} 
+                  key={service.num}
                   sx={{
-                    color: 'rgba(255, 255, 255, 0.25)',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    display: 'inline-block',
-                    transition: 'all 0.3s ease'
+                    borderRight: '1.5px solid #252525',
+                    borderBottom: '1.5px solid #252525',
+                    p: { xs: 4, md: 5 },
+                    position: 'relative',
+                    transition: 'all 0.2s ease-in-out',
+                    cursor: 'pointer',
+                    backgroundColor: 'transparent',
+                    color: '#252525',
+                    '&:hover': {
+                      backgroundColor: '#252525',
+                      color: '#f1f0ee',
+                      '& .service-num': {
+                        color: 'rgba(241, 240, 238, 0.4)',
+                      },
+                      '& .service-arrow': {
+                        color: '#f1f0ee',
+                        opacity: 1,
+                        transform: 'translateX(0)'
+                      },
+                      '& .service-tag': {
+                        borderColor: 'rgba(241, 240, 238, 0.2)',
+                        color: 'rgba(241, 240, 238, 0.7)'
+                      }
+                    }
                   }}
                 >
-                  // {service.num}
-                </Typography>
-                
-                <ArrowForwardIcon 
-                  className="service-arrow"
-                  sx={{ 
-                    color: '#FFFFFF', 
-                    fontSize: '1.2rem',
-                    opacity: 0,
-                    transform: 'translateX(-10px)',
-                    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                  }} 
-                />
-              </Box>
+                  {/* Number and Arrow Header */}
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                    <Typography
+                      className="service-num"
+                      variant="caption"
+                      sx={{
+                        color: 'rgba(37, 37, 37, 0.35)',
+                        fontSize: '0.85rem',
+                        fontWeight: 700,
+                        transition: 'color 0.2s ease-in-out'
+                      }}
+                    >
+                      // {service.num}
+                    </Typography>
+                    
+                    <ArrowForwardIcon 
+                      className="service-arrow"
+                      sx={{ 
+                        color: '#252525', 
+                        fontSize: '1.2rem',
+                        opacity: 0.2,
+                        transform: 'translateX(-5px)',
+                        transition: 'all 0.2s ease-in-out'
+                      }} 
+                    />
+                  </Box>
 
-              {/* Service Title */}
-              <Typography
-                variant="h4"
-                sx={{
-                  fontSize: '1.8rem',
-                  mb: 2.5,
-                  fontFamily: '"Playfair Display", serif',
-                  fontWeight: 500
-                }}
-              >
-                {service.title}
-              </Typography>
-
-              {/* Service Desc */}
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'text.secondary',
-                  fontSize: '1rem',
-                  lineHeight: 1.7,
-                  mb: 4.5
-                }}
-              >
-                {service.desc}
-              </Typography>
-
-              {/* Service Tag Details */}
-              <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
-                {service.details.map((detail) => (
-                  <Box
-                    key={detail}
-                    className="service-tag"
+                  {/* Service Title */}
+                  <Typography
+                    variant="h4"
                     sx={{
-                      px: 2.2,
-                      py: 0.6,
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      fontSize: '0.78rem',
-                      color: 'text.secondary',
-                      fontFamily: '"Inter", sans-serif',
-                      transition: 'all 0.3s ease',
-                      fontWeight: 500
+                      fontSize: '2rem',
+                      mb: 2,
+                      fontWeight: 900,
+                      lineHeight: 1
                     }}
                   >
-                    {detail}
+                    {service.title}
+                  </Typography>
+
+                  {/* Service Desc */}
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: 'inherit',
+                      opacity: 0.85,
+                      fontSize: '0.95rem',
+                      lineHeight: 1.6,
+                      mb: 4
+                    }}
+                  >
+                    {service.desc}
+                  </Typography>
+
+                  {/* Service Tag Details */}
+                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    {service.details.map((detail) => (
+                      <Box
+                        key={detail}
+                        className="service-tag"
+                        sx={{
+                          px: 1.8,
+                          py: 0.5,
+                          border: '1.2px solid rgba(37, 37, 37, 0.12)',
+                          fontSize: '0.72rem',
+                          color: 'text.secondary',
+                          fontFamily: '"Space Mono", monospace',
+                          transition: 'all 0.2s ease-in-out',
+                          fontWeight: 700
+                        }}
+                      >
+                        {detail}
+                      </Box>
+                    ))}
                   </Box>
-                ))}
-              </Box>
+                </Grid>
+              ))}
             </Grid>
-          ))}
+          </Grid>
+          
         </Grid>
       </Container>
     </Box>
