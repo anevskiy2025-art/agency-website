@@ -1,31 +1,32 @@
 @echo off
+chcp 65001 >nul
 title Aether Web Studio - Cloud Deployer
 echo ========================================================
-echo   ÆTHER DIGITAL STUDIO - CLOUD DEPLOYER
+echo   AETHER DIGITAL STUDIO - CLOUD DEPLOYER
 echo ========================================================
 echo.
 
-echo [1/3] Добавление изменений в Git...
-git add .
+echo [1/3] Adding all changes to Git...
+git add -A
 
 echo.
-echo [2/3] Создание коммита...
-git commit -m "Set up GitHub Actions deployment"
+echo [2/3] Creating commit...
+git commit -m "Deploy: update %date% %time:~0,5%"
 
 echo.
-echo [3/3] Отправка изменений на GitHub...
+echo [3/3] Pushing to GitHub...
 git push origin main
 
 if %ERRORLEVEL% NEQ 0 (
     echo.
-    echo ОШИБКА: Не удалось отправить файлы на GitHub.
+    echo ERROR: Push failed.
     pause
     exit /b
 )
 
 echo.
 echo ========================================================
-echo Изменения отправлены на GitHub!
-echo Теперь GitHub в облаке автоматически соберет и запустит ваш сайт.
+echo Deployed successfully!
+echo GitHub Actions will now build and publish your site.
 echo ========================================================
 pause
