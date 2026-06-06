@@ -320,7 +320,7 @@ export default function ContactForm() {
                       backgroundColor: 'rgba(115,9,243,0.05)'
                     }
                   }}
-                  onClick={(e) => {
+                  onClick={() => {
                     // Fallback to web link if Viber application protocol is not handled
                     setTimeout(() => {
                       window.open('https://viber.click/375256429146', '_blank');
