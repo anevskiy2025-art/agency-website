@@ -112,7 +112,7 @@ export default function Hero() {
             >
               Посмотреть кейсы
             </Button>
-          </Box>
+          </Grid>
         </Grid>
 
         {/* Scroll down indicator */}
