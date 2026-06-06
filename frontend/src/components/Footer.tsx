@@ -1,116 +1,153 @@
-import { Box, Container, Typography, Grid, Button } from '@mui/material';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { Box, Container, Typography, Button, Grid } from '@mui/material';
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <Box 
-      component="footer" 
-      sx={{ 
-        py: { xs: 8, md: 10 }, 
-        bgcolor: 'background.default', 
-        borderTop: '1.5px solid #252525',
-        mt: 'auto',
-        position: 'relative'
+    <Box
+      component="footer"
+      sx={{
+        pt: { xs: 6, md: 8 },
+        pb: { xs: 4, md: 5 },
+        borderTop: '0.5px solid rgba(0,0,0,0.06)',
       }}
     >
-      <Container maxWidth="xl">
-        <Grid container spacing={4} sx={{ borderBottom: '1.5px solid rgba(37, 37, 37, 0.08)', pb: 6 }}>
-          
-          {/* Column 1: Links */}
+      <Container maxWidth="lg">
+        <Grid container spacing={4} sx={{ mb: 6 }}>
+          {/* Brand */}
           <Grid item xs={12} md={4}>
-            <Typography variant="h6" sx={{ fontSize: '0.9rem', mb: 2.5, letterSpacing: '1.5px' }}>
-              НАВИГАЦИЯ & СЕТИ
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: '"DM Serif Display", serif',
+                fontWeight: 400,
+                fontSize: '1.3rem',
+                mb: 1.5,
+              }}
+            >
+              Æther
             </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Button 
-                href="https://t.me/+375256429146" 
-                target="_blank" 
-                sx={{ justifySelf: 'flex-start', width: 'fit-content', border: 'none', p: 0, '&:hover': { bgcolor: 'transparent', color: '#252525', textDecoration: 'underline' } }}
-              >
-                — TELEGRAM
-              </Button>
-              <Button 
-                href="https://github.com/anevskiy2025-art" 
-                target="_blank" 
-                sx={{ justifySelf: 'flex-start', width: 'fit-content', border: 'none', p: 0, '&:hover': { bgcolor: 'transparent', color: '#252525', textDecoration: 'underline' } }}
-              >
-                — GITHUB
-              </Button>
-            </Box>
-          </Grid>
-
-          {/* Column 2: Address / Studio Info */}
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" sx={{ fontSize: '0.9rem', mb: 2.5, letterSpacing: '1.5px' }}>
-              СТУДИЯ
-            </Typography>
-            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5, lineHeight: 1.5, fontSize: '0.8rem' }}>
-              ÆTHER DIGITAL STUDIO<br />
-              РАЗРАБОТКА И UI/UX ДИЗАЙН<br />
-              МИНСК, БЕЛАРУСЬ
+            <Typography
+              variant="body2"
+              sx={{ color: 'text.secondary', maxWidth: 280 }}
+            >
+              Создаём цифровые продукты с вниманием к каждой детали.
+              Минск, Беларусь.
             </Typography>
           </Grid>
 
-          {/* Column 3: Legal & Back to top */}
-          <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <Box>
-              <Typography variant="h6" sx={{ fontSize: '0.9rem', mb: 2, letterSpacing: '1.5px' }}>
-                КОПИРАЙТ
-              </Typography>
-              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5, fontSize: '0.78rem' }}>
-                © {new Date().getFullYear()} Aether Digital. Все права защищены.
-              </Typography>
-              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', fontSize: '0.78rem' }}>
-                Разработка: Невский Александр Владимирович
-              </Typography>
-            </Box>
+          {/* Navigation */}
+          <Grid item xs={6} md={2}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: 'text.secondary',
+                display: 'block',
+                mb: 2,
+                fontWeight: 500,
+              }}
+            >
+              Навигация
+            </Typography>
+            {['Услуги', 'Портфолио', 'Контакты'].map((label) => (
+              <Button
+                key={label}
+                size="small"
+                onClick={() => {
+                  const id = label === 'Услуги' ? '#services' : label === 'Портфолио' ? '#portfolio' : '#contact';
+                  document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                sx={{
+                  display: 'block',
+                  color: 'text.secondary',
+                  fontWeight: 400,
+                  fontSize: '0.85rem',
+                  p: 0,
+                  mb: 1,
+                  minWidth: 0,
+                  textAlign: 'left',
+                  '&:hover': { color: 'text.primary', bgcolor: 'transparent' },
+                }}
+              >
+                {label}
+              </Button>
+            ))}
+          </Grid>
 
+          {/* Social */}
+          <Grid item xs={6} md={3}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: 'text.secondary',
+                display: 'block',
+                mb: 2,
+                fontWeight: 500,
+              }}
+            >
+              Соцсети
+            </Typography>
+            {[
+              { label: 'Telegram', href: 'https://t.me/+375256429146', icon: 'ti-brand-telegram' },
+              { label: 'GitHub', href: 'https://github.com/anevskiy2025-art', icon: 'ti-brand-github' },
+            ].map((link) => (
+              <Button
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="small"
+                startIcon={
+                  <i className={`ti ${link.icon}`} style={{ fontSize: 15 }} aria-hidden="true" />
+                }
+                sx={{
+                  display: 'flex',
+                  color: 'text.secondary',
+                  fontWeight: 400,
+                  fontSize: '0.85rem',
+                  p: 0,
+                  mb: 1,
+                  minWidth: 0,
+                  '&:hover': { color: 'text.primary', bgcolor: 'transparent' },
+                }}
+              >
+                {link.label}
+              </Button>
+            ))}
+          </Grid>
+
+          {/* Back to top */}
+          <Grid item xs={12} md={3} sx={{ display: 'flex', alignItems: { xs: 'flex-start', md: 'flex-start' }, justifyContent: { md: 'flex-end' } }}>
             <Button
               onClick={scrollToTop}
-              startIcon={<ArrowUpwardIcon />}
-              sx={{
-                mt: 4,
-                width: 'fit-content',
-                border: 'none',
-                color: 'text.primary',
-                fontSize: '0.8rem',
-                p: 0,
-                alignSelf: 'flex-start',
-                '&:hover': {
-                  color: 'text.secondary',
-                  backgroundColor: 'transparent',
-                  transform: 'translateY(-3px)'
-                }
-              }}
+              variant="outlined"
+              size="small"
+              startIcon={<i className="ti ti-arrow-up" style={{ fontSize: 15 }} aria-hidden="true" />}
+              sx={{ borderRadius: 3 }}
             >
               Наверх
             </Button>
           </Grid>
-
         </Grid>
 
-        {/* Giant branding text watermark matching duties.xyz logo layout */}
-        <Typography 
-          variant="h1" 
-          sx={{ 
-            fontSize: { xs: '5rem', sm: '8.5rem', md: '12.5rem' }, 
-            textAlign: 'center', 
-            fontWeight: 900, 
-            letterSpacing: '-6px', 
-            lineHeight: 0.8, 
-            color: 'rgba(37, 37, 37, 0.05)', 
-            userSelect: 'none', 
-            mt: 8,
-            fontFamily: '"Barlow Condensed", sans-serif'
+        {/* Bottom line */}
+        <Box
+          sx={{
+            pt: 3,
+            borderTop: '0.5px solid rgba(0,0,0,0.06)',
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'space-between',
+            gap: 1,
           }}
         >
-          ÆTHER
-        </Typography>
-
+          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+            © {new Date().getFullYear()} Aether Digital Studio
+          </Typography>
+          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+            Разработка: Невский Александр Владимирович
+          </Typography>
+        </Box>
       </Container>
     </Box>
   );

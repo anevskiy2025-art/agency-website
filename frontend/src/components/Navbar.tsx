@@ -4,165 +4,131 @@ import {
   Toolbar,
   Typography,
   Button,
+  Box,
+  Container,
   IconButton,
   Drawer,
   List,
   ListItem,
-  ListItemText,
-  Box,
-  Container
+  ListItemButton,
+  ListItemText
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
 
 const navItems = [
-  { label: 'Услуги', id: '#services' },
-  { label: 'Портфолио', id: '#portfolio' },
-  { label: 'Контакты', id: '#contact' }
+  { label: 'Услуги', href: '#services' },
+  { label: 'Портфолио', href: '#portfolio' },
+  { label: 'Контакты', href: '#contact' },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.querySelector(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const scrollTo = (href: string) => {
     setMobileOpen(false);
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <AppBar 
-      position="sticky" 
-      elevation={0}
-      sx={{ 
-        bgcolor: 'background.default', 
-        borderBottom: '1.5px solid #252525',
-        zIndex: (theme) => theme.zIndex.drawer + 1,
-        color: 'text.primary'
-      }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ justifyContent: 'space-between', height: 80 }}>
-          {/* Logo */}
-          <Typography
-            variant="h4"
-            component="div"
-            sx={{
-              fontFamily: '"Barlow Condensed", sans-serif',
-              fontWeight: 900,
-              fontSize: '2rem',
-              cursor: 'pointer',
-              letterSpacing: '-0.5px',
-              color: 'primary.main',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1
-            }}
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            ÆTHER
-          </Typography>
-
-          {/* Desktop Nav Items */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 5, alignItems: 'center' }}>
-            {navItems.map((item) => (
-              <Button
-                key={item.label}
-                onClick={() => scrollToSection(item.id)}
-                sx={{
-                  border: 'none',
-                  p: 0,
-                  fontSize: '0.85rem',
-                  fontFamily: '"Space Mono", monospace',
-                  fontWeight: 700,
-                  color: 'rgba(37,37,37,0.7)',
-                  '&:hover': {
-                    color: '#252525',
-                    backgroundColor: 'transparent'
-                  }
-                }}
-              >
-                {item.label}
-              </Button>
-            ))}
-            <Button 
-              variant="contained" 
-              onClick={() => scrollToSection('#contact')}
-              sx={{ ml: 2 }}
-            >
-              Обсудить проект
-            </Button>
-          </Box>
-
-          {/* Mobile Menu Toggle */}
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ display: { md: 'none' }, color: '#252525' }}
-          >
-            {mobileOpen ? <CloseIcon /> : <MenuIcon />}
-          </IconButton>
-        </Toolbar>
-      </Container>
-
-      {/* Mobile Drawer */}
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{ keepMounted: true }}
+    <>
+      <AppBar
+        position="sticky"
+        elevation={0}
         sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { 
-            boxSizing: 'border-box', 
-            width: '100%', 
-            bgcolor: 'background.default',
-            backgroundImage: 'none',
-            borderLeft: 'none',
-            pt: 10
-          },
+          bgcolor: 'rgba(250, 249, 247, 0.85)',
+          backdropFilter: 'blur(12px)',
+          borderBottom: '0.5px solid rgba(0,0,0,0.06)',
+          color: 'text.primary',
         }}
       >
-        <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <List sx={{ mb: 'auto' }}>
-            {navItems.map((item) => (
-              <ListItem key={item.label} disablePadding sx={{ mb: 3 }}>
+        <Container maxWidth="lg">
+          <Toolbar disableGutters sx={{ minHeight: 64, justifyContent: 'space-between' }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: '"DM Serif Display", serif',
+                fontWeight: 400,
+                fontSize: '1.3rem',
+                cursor: 'pointer',
+                letterSpacing: '-0.3px',
+              }}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              Æther
+            </Typography>
+
+            {/* Desktop nav */}
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1, alignItems: 'center' }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item.label}
+                  onClick={() => scrollTo(item.href)}
+                  sx={{
+                    color: 'text.secondary',
+                    fontWeight: 400,
+                    fontSize: '0.9rem',
+                    '&:hover': { color: 'text.primary', bgcolor: 'transparent' },
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+              <Button
+                variant="contained"
+                onClick={() => scrollTo('#contact')}
+                sx={{ ml: 1 }}
+              >
+                Обсудить проект
+              </Button>
+            </Box>
+
+            {/* Mobile hamburger */}
+            <IconButton
+              onClick={() => setMobileOpen(true)}
+              sx={{ display: { md: 'none' }, color: 'text.primary' }}
+              aria-label="Открыть меню"
+            >
+              <i className="ti ti-menu-2" style={{ fontSize: 22 }} />
+            </IconButton>
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Mobile drawer */}
+      <Drawer
+        anchor="right"
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        PaperProps={{
+          sx: { width: 280, bgcolor: '#faf9f7', p: 2 }
+        }}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+          <IconButton onClick={() => setMobileOpen(false)} aria-label="Закрыть меню">
+            <i className="ti ti-x" style={{ fontSize: 20 }} />
+          </IconButton>
+        </Box>
+        <List>
+          {navItems.map((item) => (
+            <ListItem key={item.label} disablePadding>
+              <ListItemButton onClick={() => scrollTo(item.href)}>
                 <ListItemText
                   primary={item.label}
-                  primaryTypographyProps={{
-                    align: 'center',
-                    onClick: () => scrollToSection(item.id),
-                    sx: {
-                      fontFamily: '"Barlow Condensed", sans-serif',
-                      fontSize: '3rem',
-                      fontWeight: 900,
-                      cursor: 'pointer',
-                      color: 'primary.main',
-                      textTransform: 'uppercase'
-                    }
-                  }}
+                  primaryTypographyProps={{ fontSize: '1.1rem', fontWeight: 500 }}
                 />
-              </ListItem>
-            ))}
-          </List>
-          <Button 
-            variant="contained" 
-            fullWidth
-            onClick={() => scrollToSection('#contact')}
-            sx={{ py: 2, fontSize: '1rem' }}
-          >
-            Обсудить проект
-          </Button>
-        </Box>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={() => scrollTo('#contact')}
+          sx={{ mt: 2 }}
+        >
+          Обсудить проект
+        </Button>
       </Drawer>
-    </AppBar>
+    </>
   );
 }

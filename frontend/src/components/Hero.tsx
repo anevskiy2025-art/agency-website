@@ -1,190 +1,192 @@
-import { useState, useEffect } from 'react';
-import { Box, Container, Typography, Button, Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Container, Typography, Button, Chip } from '@mui/material';
+import heroImg from '../assets/hero_workspace.png';
 
 export default function Hero() {
-  const [timeStr, setTimeStr] = useState('');
+  const [time, setTime] = useState('');
+  const [isWorking, setIsWorking] = useState(false);
 
   useEffect(() => {
-    const updateTime = () => {
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: 'Europe/Minsk',
+    const tick = () => {
+      const now = new Date();
+      const fmt = new Intl.DateTimeFormat('ru-RU', {
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      };
-      const formatter = new Intl.DateTimeFormat('ru-RU', options);
-      setTimeStr(formatter.format(new Date()));
+        timeZone: 'Europe/Minsk',
+      });
+      setTime(fmt.format(now));
+      const h = Number(
+        new Intl.DateTimeFormat('en-US', {
+          hour: 'numeric',
+          hour12: false,
+          timeZone: 'Europe/Minsk',
+        }).format(now)
+      );
+      setIsWorking(h >= 9 && h < 20);
     };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
+    tick();
+    const id = setInterval(tick, 30000);
+    return () => clearInterval(id);
   }, []);
 
-  const getDutyStatus = () => {
-    const minskHour = new Date(new Date().toLocaleString("en-US", {timeZone: "Europe/Minsk"})).getHours();
-    if (minskHour >= 9 && minskHour < 19) {
-      return 'ON-DUTY';
-    }
-    return 'OFF-DUTY';
-  };
-
-  const scrollToContact = () => {
-    const element = document.querySelector('#contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const scrollToPortfolio = () => {
-    const element = document.querySelector('#portfolio');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <Box 
-      sx={{ 
-        position: 'relative',
+    <Box
+      id="hero"
+      sx={{
         pt: { xs: 8, md: 12 },
-        pb: { xs: 8, md: 12 },
-        overflow: 'hidden'
+        pb: { xs: 8, md: 14 },
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
-        <Grid container spacing={4} sx={{ borderBottom: '1.5px solid #252525', pb: { xs: 6, md: 10 } }}>
-          
-          {/* Left Column: Studio Meta */}
-          <Grid item xs={12} md={3}>
-            <Box sx={{ borderTop: '1.5px solid #252525', pt: 3 }}>
-              <Typography variant="h6" sx={{ fontSize: '0.9rem', mb: 2, letterSpacing: '1.5px' }}>
-                ÆTHER (STUDIO)
-              </Typography>
-              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5, fontSize: '0.8rem' }}>
-                ЦИФРОВАЯ СТУДИЯ И
-              </Typography>
-              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', fontSize: '0.8rem' }}>
-                ПАРТНЕР ПО РАЗРАБОТКЕ
-              </Typography>
-            </Box>
-          </Grid>
-
-          {/* Center Column: Massive Headline & List */}
-          <Grid item xs={12} md={6}>
-            <Box sx={{ borderTop: '1.5px solid #252525', pt: 3 }}>
-              <Typography 
-                variant="h1" 
-                sx={{ 
-                  fontSize: { xs: '3.2rem', sm: '4.8rem', md: '5.6rem' },
-                  letterSpacing: '-1.5px',
-                  mb: 5,
-                  fontWeight: 900
-                }}
-              >
-                СОЗДАЕМ ВЕБ-САЙТЫ И ЦИФРОВЫЕ СИСТЕМЫ ДЛЯ СМЕЛЫХ БРЕНДОВ
-              </Typography>
-              
-              <Box sx={{ mb: 6 }}>
-                <Typography variant="h6" sx={{ fontSize: '0.9rem', mb: 2.5, letterSpacing: '1px' }}>
-                  НАПРАВЛЕНИЯ РАБОТЫ:
-                </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                  <Typography variant="caption" sx={{ fontSize: '0.85rem', color: 'text.secondary', display: 'block' }}>
-                    — ОПРЕДЕЛЯЕМ СТРАТЕГИЮ И ПОЗИЦИОНИРОВАНИЕ
-                  </Typography>
-                  <Typography variant="caption" sx={{ fontSize: '0.85rem', color: 'text.secondary', display: 'block' }}>
-                    — ПРОЕКТИРУЕМ СЛОЖНЫЙ UI/UX И ДИЗАЙН-СИСТЕМЫ
-                  </Typography>
-                  <Typography variant="caption" sx={{ fontSize: '0.85rem', color: 'text.secondary', display: 'block' }}>
-                    — ВНЕДРЯЕМ НАДЕЖНЫЙ КОД И ОПТИМИЗИРУЕМ В СЕТИ
-                  </Typography>
-                </Box>
-              </Box>
-
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <Button variant="contained" onClick={scrollToContact} sx={{ px: 4, py: 1.8 }}>
-                  Начать проект
-                </Button>
-                <Button variant="outlined" onClick={scrollToPortfolio} sx={{ px: 4, py: 1.8 }}>
-                  Наши кейсы
-                </Button>
-              </Box>
-            </Box>
-          </Grid>
-
-          {/* Right Column: Live Clock Status */}
-          <Grid item xs={12} md={3}>
-            <Box sx={{ borderTop: '1.5px solid #252525', pt: 3, display: 'flex', flexDirection: 'column' }}>
-              <Typography variant="h6" sx={{ fontSize: '0.9rem', mb: 2, letterSpacing: '1.5px' }}>
-                СТАТУС СТУДИИ:
-              </Typography>
-              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5, fontSize: '0.8rem' }}>
-                {getDutyStatus() === 'ON-DUTY' ? '● В РАБОЧЕЕ ВРЕМЯ ' : '○ ВНЕ ОФИСА '} {timeStr}
-              </Typography>
-              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', fontSize: '0.8rem' }}>
-                МИНСК, БЕЛАРУСЬ (UTC+3)
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-
-        {/* Stats Grid */}
-        <Grid 
-          container 
-          spacing={0} 
-          sx={{ 
-            mt: 0, 
-            borderLeft: '1.5px solid #252525'
+      <Container maxWidth="lg">
+        {/* Top meta line */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            mb: { xs: 4, md: 5 },
+            flexWrap: 'wrap',
           }}
         >
-          {[
-            { value: '5+', label: 'ЛЕТ ОПЫТА В РАЗРАБОТКЕ' },
-            { value: '40+', label: 'СДАННЫХ ПРОЕКТОВ' },
-            { value: '99%', label: 'УДОВЛЕТВОРЕННЫХ КЛИЕНТОВ' },
-            { value: '100%', label: 'ВНИМАНИЕ К ДЕТАЛЯМ' }
-          ].map((stat, idx) => (
-            <Grid 
-              item 
-              xs={6} 
-              md={3} 
-              key={idx} 
-              sx={{ 
-                p: { xs: 3, md: 4.5 }, 
-                borderRight: '1.5px solid #252525',
-                borderBottom: '1.5px solid #252525',
-                transition: 'all 0.15s ease-in-out',
-                '&:hover': {
-                  bgcolor: 'background.paper'
-                }
-              }}
-            >
-              <Typography 
-                variant="h2" 
-                sx={{ 
-                  fontWeight: 900, 
-                  fontSize: { xs: '2.5rem', md: '3.8rem' }, 
-                  color: 'primary.main', 
-                  letterSpacing: '-1.5px',
-                  mb: 1
+          <Chip
+            label={isWorking ? 'На связи' : 'Не в сети'}
+            size="small"
+            sx={{
+              bgcolor: isWorking ? '#E1F5EE' : '#F1EFE8',
+              color: isWorking ? '#0F6E56' : '#5F5E5A',
+              fontWeight: 500,
+              fontSize: '0.78rem',
+              '& .MuiChip-label': { px: 1.5 },
+            }}
+            icon={
+              <Box
+                sx={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: '50%',
+                  bgcolor: isWorking ? '#1D9E75' : '#888780',
+                  ml: 1,
+                }}
+              />
+            }
+          />
+          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+            Минск, {time}
+          </Typography>
+        </Box>
+
+        {/* Main heading */}
+        <Typography
+          variant="h1"
+          sx={{
+            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.2rem' },
+            maxWidth: 720,
+            mb: 3,
+          }}
+        >
+          Создаём цифровые продукты, которыми хочется пользоваться
+        </Typography>
+
+        <Typography
+          variant="body1"
+          sx={{
+            color: 'text.secondary',
+            maxWidth: 520,
+            fontSize: { xs: '1rem', md: '1.1rem' },
+            mb: 5,
+          }}
+        >
+          Веб-разработка, UI/UX дизайн и e-commerce решения для бизнеса,
+          который ценит качество и внимание к деталям.
+        </Typography>
+
+        {/* CTA buttons */}
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: { xs: 6, md: 8 } }}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() =>
+              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+            }
+            sx={{ px: 4, py: 1.5 }}
+          >
+            Обсудить проект
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={() =>
+              document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' })
+            }
+            sx={{ px: 4, py: 1.5 }}
+          >
+            Смотреть работы
+          </Button>
+        </Box>
+
+        {/* Hero image */}
+        <Box
+          sx={{
+            borderRadius: 4,
+            overflow: 'hidden',
+            border: '0.5px solid rgba(0,0,0,0.06)',
+            position: 'relative',
+          }}
+        >
+          <img
+            src={heroImg}
+            alt="Рабочее пространство Aether Studio"
+            style={{
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              maxHeight: 440,
+              objectFit: 'cover',
+            }}
+          />
+          {/* Floating stat cards */}
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 20,
+              left: 20,
+              display: { xs: 'none', sm: 'flex' },
+              gap: 1.5,
+            }}
+          >
+            {[
+              { icon: 'ti-code', label: '50+ проектов' },
+              { icon: 'ti-users', label: '30+ клиентов' },
+              { icon: 'ti-clock', label: '3+ года опыта' },
+            ].map((s) => (
+              <Box
+                key={s.label}
+                sx={{
+                  bgcolor: 'rgba(255,255,255,0.92)',
+                  backdropFilter: 'blur(8px)',
+                  borderRadius: 3,
+                  px: 2,
+                  py: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                  border: '0.5px solid rgba(0,0,0,0.06)',
                 }}
               >
-                {stat.value}
-              </Typography>
-              <Typography 
-                variant="caption" 
-                sx={{ 
-                  color: 'text.secondary', 
-                  letterSpacing: '1.5px',
-                  fontWeight: 700,
-                  fontSize: '0.72rem'
-                }}
-              >
-                {stat.label}
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>
+                <i
+                  className={`ti ${s.icon}`}
+                  style={{ fontSize: 16, color: '#534AB7' }}
+                  aria-hidden="true"
+                />
+                <Typography variant="caption" sx={{ fontWeight: 500, fontSize: '0.78rem' }}>
+                  {s.label}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Box>
       </Container>
     </Box>
   );
