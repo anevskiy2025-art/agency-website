@@ -132,11 +132,13 @@ export default function Navbar() {
                 <ListItemText
                   primary={item.label}
                   primaryTypographyProps={{
-                    fontFamily: '"Playfair Display", serif',
-                    fontSize: '2.5rem',
                     align: 'center',
-                    cursor: 'pointer',
-                    onClick: () => scrollToSection(item.id)
+                    onClick: () => scrollToSection(item.id),
+                    sx: {
+                      fontFamily: '"Playfair Display", serif',
+                      fontSize: '2.5rem',
+                      cursor: 'pointer'
+                    }
                   }}
                 />
               </ListItem>
