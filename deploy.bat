@@ -14,29 +14,50 @@ if "%GH_USER%"=="" (
 )
 
 echo.
-echo [1/4] Инициализация Git-репозитория...
+echo [1/5] Инициализация Git-репозитория...
 git init
 git add .
 git commit -m "deploy web studio to GitHub Pages"
 
 echo.
-echo [2/4] Настройка связи с GitHub репозиторием...
+echo [2/5] Настройка связи с GitHub репозиторием...
 git remote remove origin >nul 2>&1
 git remote add origin https://github.com/%GH_USER%/agency-website.git
 git branch -M main
 
 echo.
-echo [3/4] Установка пакетов сборщика...
-cd frontend
-call npm install
+echo [3/5] Загрузка исходного кода на GitHub (ветка main)...
+echo Сейчас может открыться окно авторизации GitHub. Пожалуйста, войдите в свой аккаунт.
+echo.
+git push -u origin main
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo ОШИБКА: Не удалось отправить исходный код на GitHub. 
+    echo Проверьте авторизацию Git или создали ли вы репозиторий "agency-website".
+    pause
+    exit /b
+)
 
 echo.
-echo [4/4] Сборка и деплой на GitHub Pages...
+echo [4/5] Установка пакетов сборщика...
+cd frontend
+call npm install
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo ОШИБКА: Не удалось установить npm-пакеты.
+    pause
+    exit /b
+)
+
 echo.
-echo ВАЖНО: Убедитесь, что вы предварительно создали пустой публичный
-echo репозиторий с именем "agency-website" на своем аккаунте GitHub!
-echo.
+echo [5/5] Сборка и деплой на GitHub Pages...
 call npm run deploy
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo ОШИБКА: Не удалось выполнить сборку или деплой на GitHub Pages.
+    pause
+    exit /b
+)
 
 echo.
 echo ========================================================
